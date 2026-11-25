@@ -1,0 +1,88 @@
+---
+title: "ACTIVIDAD NB FCI: NAIVE BAYES PARA PREDECIR EL RENDIMIENTO DE LOS ESTUDIANTES"
+author: "FCO. EMMANUEL DORANTES CAÑA"
+date: "24/11/26"
+output:
+  html_document:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+# 1. Objetivo
+
+Aplicar el clasificador Naive Bayes a datos de estudiantes de la FCI para predecir su **Rendimiento** (Excelente, Bueno, Regular, Deficiente) a partir de cuatro atributos: tiempo de estudio, asistencia, participación y situación económica. El modelo se entrena con 80% de los datos y se prueba con el 20% restante.
+
+# 2. Datos
+
+Las filas de abajo son los 10 estudiantes del ejemplo de la actividad. Reemplázalas por los datos de tus 20 a 50 estudiantes reales (una fila por estudiante, escribiendo las categorías exactamente igual).
+
+```{r datos}
+datos <- data.frame(
+  TiempoEstudio = c("Alto","Medio","Bajo","Alto","Medio","Alto","Bajo","Medio","Alto","Bajo"),
+  Asistencia    = c("Alta","Media","Baja","Alta","Media","Alta","Baja","Alta","Media","Baja"),
+  Participacion = c("Alta","Baja","Baja","Media","Media","Alta","Baja","Media","Alta","Media"),
+  SituacionEcon = c("Buena","Mala","Mala","Buena","Buena","Buena","Mala","Buena","Buena","Mala"),
+  Rendimiento   = c("Excelente","Regular","Deficiente","Bueno","Bueno",
+                    "Excelente","Deficiente","Bueno","Excelente","Regular")
+)
+
+# Convertimos todas las columnas a factor (variable categórica)
+niveles_rend <- c("Deficiente", "Regular", "Bueno", "Excelente")
+datos[] <- lapply(datos, factor)
+datos$Rendimiento <- factor(datos$Rendimiento, levels = niveles_rend)
+
+str(datos)
+table(datos$Rendimiento)
+```
+
+# 3. División 80% entrenamiento / 20% prueba
+
+```{r split}
+library(e1071)
+
+set.seed(123)
+n <- nrow(datos)
+idx_train <- sample(seq_len(n), size = round(0.8 * n))
+
+train_data <- datos[idx_train, ]
+test_data  <- datos[-idx_train, ]
+
+cat("Entrenamiento:", nrow(train_data), " Prueba:", nrow(test_data), "\n")
+```
+
+# 4. Entrenamiento
+
+Como los atributos son categóricos, Naive Bayes calcula tablas de probabilidad condicional $P(x_i \mid c)$. Usamos `laplace = 1` (suavizado de Laplace) para evitar probabilidades de cero cuando una combinación no aparece en los datos de entrenamiento, algo común con pocos datos.
+
+```{r modelo}
+modelo <- naiveBayes(Rendimiento ~ ., data = train_data, laplace = 1)
+modelo$apriori
+modelo$tables
+```
+
+# 5. Predicción y matriz de confusión
+
+```{r prediccion}
+pred <- predict(modelo, test_data)
+
+resultado <- data.frame(test_data, Predicho = pred)
+resultado
+
+matriz <- table(
+  Predicho = factor(pred, levels = niveles_rend),
+  Real     = factor(test_data$Rendimiento, levels = niveles_rend)
+)
+matriz
+```
+
+```{r precision}
+precision <- sum(diag(matriz)) / sum(matriz)
+cat("Precisión:", round(precision, 3), "\n")
+```
+
+# 6. Conclusiones
+
+(Escribe aquí con tus palabras: qué precisión obtuviste, en qué clases se equivocó el modelo y por qué crees que pasó. Recuerda que con pocos estudiantes en la prueba, la precisión puede variar mucho.)

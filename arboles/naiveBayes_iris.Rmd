@@ -1,0 +1,161 @@
+---
+title: "NAIVE BAYES APLICADO AL CONJUNTO DE DATOS IRIS"
+author: "FCO. EMMANUEL DORANTES CAÑA"
+date: "24/11/26"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+# 1. Introducción
+
+Naive Bayes es un clasificador probabilístico basado en el **teorema de Bayes**. Se llama "ingenuo" (naive) porque supone que los atributos son **independientes entre sí** dado la clase.
+
+Queremos saber la probabilidad de que una observación pertenezca a la clase $c$ dados sus atributos $x_1, \dots, x_n$:
+
+$$P(c \mid x_1,\dots,x_n) \propto P(c)\prod_{i=1}^{n} P(x_i \mid c)$$
+
+Se calcula la probabilidad para cada clase y se elige la **mayor**.
+
+La probabilidad a priori de cada clase es simplemente su frecuencia en el conjunto de entrenamiento:
+
+$$P(c) = \frac{n_c}{N}$$
+
+donde $n_c$ es el número de registros de la clase $c$ y $N$ el total de registros.
+
+Como los atributos de Iris son numéricos, `naiveBayes` los modela con una **distribución normal** (gaussiana) por clase, usando la media y la desviación estándar de cada atributo en cada clase.
+
+# 2. Paquetes
+
+```{r paquetes}
+# Si no los tienes, instálalos una sola vez en la consola:
+# install.packages(c("e1071", "caret", "ggplot2"))
+
+library(e1071)   # contiene la función naiveBayes
+library(caret)   # partición de datos y evaluación del modelo
+library(ggplot2) # visualización
+```
+
+# 3. Carga y exploración de datos
+
+El conjunto Iris ya viene incluido en R: 150 flores de 3 especies, con 4 medidas cada una.
+
+```{r datos}
+data(iris)
+str(iris)
+head(iris)
+summary(iris)
+```
+
+Verificamos si hay valores faltantes (NA):
+
+```{r na}
+sum(is.na(iris))
+```
+
+Distribución de las clases (deben ser 50 de cada una):
+
+```{r clases}
+table(iris$Species)
+```
+
+Gráfico de dispersión de todos los pares de variables, coloreado por especie:
+
+```{r pairs}
+pairs(iris[, 1:4], col = iris$Species, pch = 16)
+```
+
+# 4. División en entrenamiento y prueba
+
+Usamos 70% de los datos para entrenar y 30% para probar. `createDataPartition` mantiene la misma proporción de especies en ambos conjuntos. La semilla (`set.seed`) hace que el resultado sea reproducible.
+
+```{r split}
+set.seed(123)
+train_index <- createDataPartition(iris$Species, p = 0.7, list = FALSE)
+
+train_data <- iris[train_index, ]
+test_data  <- iris[-train_index, ]
+
+dim(train_data)
+dim(test_data)
+```
+
+# 5. Entrenamiento del modelo
+
+En la fórmula `Species ~ .`, `Species` es lo que queremos predecir y el punto significa "usa todas las demás variables".
+
+```{r modelo}
+modelo_nb <- naiveBayes(Species ~ ., data = train_data)
+print(modelo_nb)
+```
+
+Probabilidades a priori de cada clase:
+
+```{r apriori}
+modelo_nb$apriori
+```
+
+Probabilidades condicionales: para cada atributo y clase se guarda la **media** (columna 1) y la **desviación estándar** (columna 2).
+
+```{r tables}
+modelo_nb$tables
+```
+
+Por ejemplo, para `Sepal.Length` y *setosa* la media es aproximadamente 5.006 cm y la desviación estándar 0.352 cm.
+
+# 6. Predicciones
+
+```{r pred}
+predicciones <- predict(modelo_nb, test_data)
+
+head(predicciones)       # lo que predijo el modelo
+head(test_data$Species)  # los valores reales
+```
+
+# 7. Evaluación del modelo
+
+La **matriz de confusión** compara lo predicho (filas) contra lo real (columnas). La diagonal son los aciertos.
+
+```{r confusion}
+confusion_matrix <- table(Predicho = predicciones, Real = test_data$Species)
+print(confusion_matrix)
+
+precision <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
+cat("Precisión:", precision, "\n")
+```
+
+Métricas más detalladas con `caret`:
+
+```{r caret}
+confusionMatrix(predicciones, test_data$Species)
+```
+
+# 8. Predicción de nuevas observaciones
+
+```{r nuevos}
+nuevos_datos <- data.frame(
+  Sepal.Length = c(5.1, 6.7, 5.8),
+  Sepal.Width  = c(3.5, 3.0, 2.7),
+  Petal.Length = c(1.4, 5.2, 4.2),
+  Petal.Width  = c(0.2, 2.3, 1.3)
+)
+
+predict(modelo_nb, nuevos_datos)
+```
+
+Probabilidades de cada clase para cada observación:
+
+```{r raw}
+predict(modelo_nb, nuevos_datos, type = "raw")
+```
+
+# 9. Conclusiones
+
+- Naive Bayes clasifica Iris con una precisión alta a pesar de su suposición de independencia.
+- *Setosa* se separa casi perfectamente de las otras dos especies; los pocos errores suelen darse entre *versicolor* y *virginica*, cuyas medidas se traslapan.
+- (Escribe aquí con tus palabras la precisión que obtuviste y qué te pareció el resultado.)
