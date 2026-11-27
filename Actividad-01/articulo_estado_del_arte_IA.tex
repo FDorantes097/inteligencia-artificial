@@ -1,0 +1,77 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{hyperref}
+\usepackage{setspace}
+\onehalfspacing
+
+\title{Estado del arte de la inteligencia artificial:\\ de los sistemas expertos a los modelos fundacionales}
+\author{Fco. Emmanuel Dorantes Caña\\
+Facultad de Ciencias de la Información, UNACAR\\
+Programación avanzada (IA)}
+\date{Noviembre de 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Este artículo resume el estado actual de la inteligencia artificial (IA). Se parte de sus antecedentes simbólicos, entre ellos los sistemas expertos, y se revisa el cambio al aprendizaje profundo y a los modelos fundacionales. También se describen los avances recientes en agentes y en ciencia, la regulación en la Unión Europea y los retos abiertos. Se concluye que la IA actual combina ideas de varias etapas y que la explicación de sus decisiones sigue siendo un problema central.
+\end{abstract}
+
+\section{Introducción}
+La inteligencia artificial estudia cómo construir sistemas capaces de percibir su entorno, razonar y actuar para lograr metas \cite{russell2020}. Desde 2012 se ha vuelto una tecnología de uso masivo, y su ritmo de avance ha hecho que las revisiones del campo envejezcan en pocos años. Este trabajo presenta una visión general del estado del arte a noviembre de 2026, apoyada en trabajos clásicos y en el informe anual del AI Index de la Universidad de Stanford.
+
+\section{Antecedentes}
+En 1950, Turing propuso evaluar la inteligencia de una máquina por su comportamiento \cite{turing1950}. El término ``inteligencia artificial'' surgió en la propuesta para el taller de Dartmouth de 1956 \cite{mccarthy1955}. Durante los años sesenta y setenta dominó el enfoque simbólico: programas que representaban el conocimiento con reglas y lo manipulaban con lógica. Dentro de esta corriente nacieron los \emph{sistemas expertos}, que combinan una base de conocimiento con un motor de inferencia para resolver problemas que requieren experiencia humana, como el diagnóstico médico o la configuración de equipos \cite{russell2020}.
+
+Su principal limitación fue el costo de obtener y mantener el conocimiento de los expertos. Esto, junto con expectativas poco realistas, llevó al llamado ``invierno de la IA'' a finales de los años ochenta, y la atención se movió hacia métodos que aprenden de los datos.
+
+\section{Aprendizaje profundo y modelos fundacionales}
+El aprendizaje profundo usa redes neuronales de muchas capas que aprenden representaciones directamente de los datos \cite{lecun2015}. Su impacto fue visible en visión por computadora, reconocimiento de voz y juegos; por ejemplo, el sistema AlphaGo derrotó al campeón europeo de Go combinando redes neuronales con búsqueda \cite{silver2016}.
+
+En 2017 apareció la arquitectura \emph{Transformer}, basada en mecanismos de atención \cite{vaswani2017}. Sobre ella se construyeron modelos de lenguaje de gran tamaño, como GPT-3, que con 175 mil millones de parámetros mostró que un mismo modelo puede realizar muchas tareas a partir de unos pocos ejemplos \cite{brown2020}. Estos modelos, entrenados con grandes volúmenes de datos y adaptables a muchas tareas, se conocen como \emph{modelos fundacionales} \cite{bommasani2021}.
+
+\section{Panorama a 2026}
+% VERIFICAR: las cifras de esta sección vienen de resúmenes periodísticos del informe; confirmarlas en el PDF oficial del AI Index 2026.
+El AI Index 2026 de Stanford concluye que las capacidades de la IA no se han estancado y que su adopción sigue creciendo \cite{aiindex2026}. Entre los datos que destacan los resúmenes del informe están:
+\begin{itemize}
+  \item La industria produjo más del 90\,\% de los modelos de frontera notables de 2025.
+  \item La IA generativa alcanzó una adopción global de alrededor de 53\,\% en tres años.
+  \item Los agentes, que ejecutan tareas en una computadora, pasaron de cerca de 12\,\% a cerca de 66\,\% de éxito en el \emph{benchmark} OSWorld.
+  \item La diferencia de rendimiento entre los mejores modelos de Estados Unidos y de China es muy pequeña.
+\end{itemize}
+Estos números indican que la tendencia reciente no es solo de modelos más grandes, sino de sistemas que usan herramientas y completan tareas de varios pasos.
+
+\section{Aplicaciones en ciencia}
+Uno de los resultados más importantes fuera del lenguaje es AlphaFold, que predijo estructuras de proteínas con una precisión comparable, en muchos casos, a la de métodos experimentales \cite{jumper2021}. Este tipo de avance muestra que la IA ya funciona como herramienta de investigación científica, además de producto comercial.
+
+\section{De los sistemas expertos a la IA actual}
+Los sistemas expertos y los modelos fundacionales resuelven el mismo problema de fondo, tomar decisiones difíciles, pero con ventajas opuestas. Un sistema experto es transparente: puede explicar qué reglas usó. Un modelo de aprendizaje profundo es flexible y se adapta a datos nuevos, pero su razonamiento es difícil de inspeccionar. Por eso hoy se estudian enfoques híbridos que combinan reglas y conocimiento explícito con aprendizaje automático, con el fin de lograr sistemas robustos y explicables.
+
+\section{Regulación}
+En la Unión Europea, el Reglamento de IA (Reglamento (UE) 2024/1689) establece obligaciones según el riesgo de cada sistema \cite{eu2024}. Debido a retrasos en las normas técnicas necesarias, el llamado \emph{Digital Omnibus} sobre IA, vigente desde el 27 de julio de 2026, pospuso la aplicación de las obligaciones de los sistemas de alto riesgo: al 2 de diciembre de 2027 para los sistemas independientes del Anexo~III (por ejemplo, empleo, educación o crédito) y al 2 de agosto de 2028 para los integrados en productos regulados \cite{legal500}. Muchas obligaciones de transparencia no se retrasaron.
+
+\section{Retos abiertos}
+Entre los problemas pendientes están la fiabilidad de los modelos, que aún fallan en tareas sencillas pese a resolver problemas muy difíciles, la seguridad, el costo energético, el impacto en el empleo y la confianza del público \cite{aiindex2026}. Todos ellos hacen que la explicación y la supervisión humana de las decisiones sigan siendo temas de investigación activos.
+
+\section{Conclusiones}
+La IA actual no reemplazó a las etapas anteriores: las reglas explícitas, el aprendizaje a partir de datos y los modelos fundacionales conviven y se combinan. El avance reciente se concentra en agentes que usan herramientas, en aplicaciones científicas y en marcos regulatorios que empiezan a aplicarse. El reto principal pasó de hacer que las máquinas resuelvan tareas a lograr que lo hagan de forma confiable, explicable y responsable.
+
+\begin{thebibliography}{99}
+\bibitem{aiindex2026} Landay, J., Lyons, T., Manyika, J., Niebles, J. C., Shoham, Y., Tabassi, E., Wald, R., Walsh, T. y Weld, D. (2026). \emph{The AI Index 2026 Annual Report}. AI Index Steering Committee, Stanford HAI. \url{https://hai.stanford.edu/ai-index/2026-ai-index-report}
+\bibitem{bommasani2021} Bommasani, R. et al. (2021). On the opportunities and risks of foundation models. \emph{arXiv:2108.07258}.
+\bibitem{brown2020} Brown, T. et al. (2020). Language models are few-shot learners. \emph{Advances in Neural Information Processing Systems, 33}.
+\bibitem{eu2024} Parlamento Europeo y Consejo de la UE (2024). Reglamento (UE) 2024/1689 por el que se establecen normas armonizadas en materia de inteligencia artificial (Ley de IA).
+\bibitem{jumper2021} Jumper, J. et al. (2021). Highly accurate protein structure prediction with AlphaFold. \emph{Nature, 596}, 583--589.
+\bibitem{lecun2015} LeCun, Y., Bengio, Y. y Hinton, G. (2015). Deep learning. \emph{Nature, 521}, 436--444.
+\bibitem{legal500} Legal 500 (20 de noviembre de 2026). The EU AI Act after the Digital Omnibus: what has changed for businesses. \url{https://www.legal500.com/intelligence/switzerland/corporate-commercial-law/the-eu-ai-act-after-the-digital-omnibus-what-has-changed-for-businesses}
+\bibitem{mccarthy1955} McCarthy, J., Minsky, M., Rochester, N. y Shannon, C. (1955). A proposal for the Dartmouth summer research project on artificial intelligence.
+\bibitem{russell2020} Russell, S. y Norvig, P. (2020). \emph{Artificial Intelligence: A Modern Approach} (4.ª ed.). Pearson.
+\bibitem{silver2016} Silver, D. et al. (2016). Mastering the game of Go with deep neural networks and tree search. \emph{Nature, 529}, 484--489.
+\bibitem{turing1950} Turing, A. M. (1950). Computing machinery and intelligence. \emph{Mind, 59}(236), 433--460.
+\bibitem{vaswani2017} Vaswani, A. et al. (2017). Attention is all you need. \emph{Advances in Neural Information Processing Systems, 30}.
+\end{thebibliography}
+\end{document}
