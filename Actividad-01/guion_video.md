@@ -2,7 +2,6 @@
 
 **Autor:** FCO. EMMANUEL DORANTES CAÑA
 **Duración estimada:** 7 a 8 minutos
-**Liga del video en YouTube:** [PEGAR AQUÍ LA LIGA]
 
 > Recomendaciones de grabación: de cuerpo entero al inicio y al final, ropa adecuada para licenciatura, buena luz y audio claro. Practica el texto 2 o 3 veces para no leerlo y evitar muletillas ("eh", "este", "o sea"). Haz pausas cortas en lugar de rellenar con sonidos.
 
